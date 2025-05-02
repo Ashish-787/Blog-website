@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AboutController;
 
 Route::get('/',[AuthController::class,'showLogin'])->name('login');
 Route::post('/login',[AuthController::class,'login'])->name('loginSave');
@@ -18,7 +19,18 @@ Route::middleware(['auth'])->group(function(){
 
    Route::get('/dashboard',[UserController::class,'index'])->name('user.dashboard');
 
-   Route::get('/ReadMore/{id}',[UserController::class,'ReadMore'])->name('user.ReadMore');
+   Route::get('/userReadMore/{id}',[UserController::class,'ReadmoreUser'])->name('user.ReadMore');
+ 
+   Route::get('/Blogs',[BlogController::class,'Blogs'])->name('user.Blogs');
+ 
+
+   Route::get('/contact',[UserController::class,'showContact'])->name('user.showContact');
+ 
+   Route::get('/AboutShow',[AboutController::class,'AboutShow'])->name('user.AboutShow');
+
+   Route::post('/saveContact',[UserController::class,'saveContact'])->name('user.saveContact');
+   
+   
 
    Route::post('logout',[AuthController::class,'logout'])->name('logout'); 
 });
@@ -37,6 +49,13 @@ Route::middleware(['auth','admin'])->prefix('admin')->group(function(){
      Route::post('/post_comment/{postId}',[AdminController::class,'storeComment'])->name('admin.storeComment');
     
      Route::get('/ReadMore/{id}',[AdminController::class,'ReadMore'])->name('admin.ReadMore');
+
+     Route::get('/add-teams',[AdminController::class,'AddTeams'])->name('admin.AddTeams');
+     Route::post('/AddteamSave',[AdminController::class,'AddteamSave'])->name('admin.AddteamSave');
+   
+   
+   
+   
 });
 
 // Route::get('/', function () {

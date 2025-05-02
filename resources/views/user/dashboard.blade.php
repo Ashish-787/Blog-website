@@ -131,7 +131,7 @@
                         </div>
                         <h3 class="mt-0 mb-2"><a href="{{ route('admin.ReadMore', $post->id) }}" class="text-decoration-none">{{ $post->title }}</a></h3>
                         <p class="mb-3">{{ Str::limit(strip_tags($post->content), 120) }}</p>
-                        <a href="{{ route('admin.ReadMore', $post->id) }}" class="btn btn-sm btn-outline-primary read-more-link">Read More</a>
+                        <a href="{{ route('user.ReadMore', $post->id) }}" class="btn btn-sm btn-outline-primary read-more-link">Read More</a>
                     </div>
                 </div>
 

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Post;
 use App\models\Comment;
+use App\models\Team;
+use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Support\Str;
 
@@ -109,4 +111,44 @@ class AdminController extends Controller
         return view('admin.ReadMore',compact('post'));
         
      }
+
+
+     //Team Members Add
+     public function AddTeams(){
+        return view('admin.teamsadd');
+     }
+
+
+     public function AddteamSave(Request $request)
+     {
+        
+     
+         $request->validate([
+             'name' => 'required|max:220',
+             'image' => 'required',
+             'designation' => 'required'
+         ]);
+     
+         $imagepath = null;
+     
+         if ($request->hasFile('image')) {
+             $imagepath = $request->file('image')->store('image', 'public');
+         }
+     
+           // Get authenticated user
+    $user = Auth::user();
+     
+         $teams = new Team([
+             'name' => $request->input('name'),
+             'user_id' => $user->id, 
+             'image_text' => $request->input('image_text'),
+             'designation' => $request->input('designation'),
+             'image' => $imagepath,
+         ]);
+       //  dd(Auth::user());
+         $teams->save();
+     
+         return response()->json(['status' => 'success', 'message' => 'Team saved successfully']);
+     }
+     
 }
